@@ -1,5 +1,6 @@
 package person.birch.sfgdi.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import person.birch.sfgdi.services.GreetingService;
 
@@ -8,6 +9,7 @@ public class SetterInjectionController {
 
     private GreetingService greetingService;
 
+    @Autowired
     public void setGreetingService(GreetingService greetingService) {
         this.greetingService = greetingService;
     }
