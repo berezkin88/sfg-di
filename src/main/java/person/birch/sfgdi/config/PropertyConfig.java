@@ -1,27 +1,13 @@
 package person.birch.sfgdi.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.annotation.PropertySources;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
-import org.springframework.core.env.Environment;
 import person.birch.sfgdi.examplebean.FakeDataSource;
 import person.birch.sfgdi.examplebean.FakeJmsBroker;
 
 @Configuration
-//@PropertySource({"classpath:datasource.properties", "classpath:jms.properties"})
-@PropertySources({
-    @PropertySource("classpath:datasource.properties"),
-    @PropertySource("classpath:jms.properties")
-})
 public class PropertyConfig {
-
-    @Autowired
-    Environment environment;
-
     @Value("${guru.username}")
     String user;
     @Value("${guru.password}")
@@ -38,7 +24,7 @@ public class PropertyConfig {
     @Bean
     public FakeDataSource fakeDataSource() {
         FakeDataSource fakeDataSource = new FakeDataSource();
-        fakeDataSource.setUsername(environment.getProperty("USERNAME"));
+        fakeDataSource.setUsername(user);
         fakeDataSource.setPassword(password);
         fakeDataSource.setUrl(url);
         return fakeDataSource;
@@ -51,10 +37,5 @@ public class PropertyConfig {
         fakeJmsBroker.setPassword(jmsPassword);
         fakeJmsBroker.setUrl(jmsUrl);
         return fakeJmsBroker;
-    }
-
-    @Bean
-    public static PropertySourcesPlaceholderConfigurer properties() {
-        return new PropertySourcesPlaceholderConfigurer();
     }
 }
